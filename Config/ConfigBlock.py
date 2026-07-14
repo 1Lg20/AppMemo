@@ -1,13 +1,12 @@
-BlockDimensionH=200
+BlockDimensionH=100
 BlockDimensionW=300
 
-Style="""
-    QLabel {
+StyleBlock="""
         background-color: #f0f0f0;
-        color: #007ACC;
-        border: 2px solid #007ACC;
+        border: 4px solid #007ACC;
         border-radius: 10px;
         font-size: 20px;
-        padding: 10px;
-    }
-"""
+        padding: 5px;
+        margin: 10px;
+        color: #000000;
+    """
