@@ -2,6 +2,7 @@ from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QScrollArea
 import BlockHome
+import SqliteConnector
 
 from Config import ConfigFinestra, ConfigBlock
 
@@ -24,7 +25,7 @@ class MainWindow(QMainWindow):
 
 		#creo scrollarea per Box
 		self.__CreaListBox()
-		self.containerLayout.addWidget(self.scroll_area)
+		self.containerLayout.addWidget(self.__scroll_area)
 		self.setCentralWidget(self.container)
 		
 
@@ -33,28 +34,22 @@ class MainWindow(QMainWindow):
 	
 	#create block
 	def __CreaListBox(self):
-		self.ListBlockW = QWidget()
-		self.ListBlockL = QVBoxLayout()
-		self.ListBlockW.setLayout(self.ListBlockL)
+		# crea il contenitore dei block
+		ListBlockW = QWidget()
+		ListBlockL = QVBoxLayout()
+		ListBlockW.setLayout(ListBlockL)
 
-		self.scroll_area = QScrollArea()
-		self.scroll_area.setWidgetResizable(True)
-		self.scroll_area.setWidget(self.ListBlockW)	
+		# Creo la scroll Area e inserisco il contenitore dei block al suo interno
+		self.__scroll_area = QScrollArea()
+		self.__scroll_area.setWidgetResizable(True)
+		self.__scroll_area.setWidget(ListBlockW)	
 
-		element = [
-			{"name": "titolo1", "id": 0},
-			{"name": "titolo2", "id": 1},
-			{"name": "titolo3", "id": 2},
-			{"name": "titolo4", "id": 3},
-			{"name": "titolo5", "id": 4},
-			{"name": "titolo6", "id": 5},
-			{"name": "titolo7", "id": 6},
-			{"name": "titolo8", "id": 7},
-			{"name": "titolo9", "id": 8},
-			{"name": "titolo10", "id": 9},
-		]
+		# Scarico i dati dal Database
+		database=SqliteConnector.Database()
+		NotesList=database.GetNotes()
 
-		for i in range(len(element)):
-			Block= BlockHome.BlockHome(element[i]["name"], element[i]["id"])
+		# Creo tanti block quenti sono gli elementi del databse e li inserisco nel contenitore
+		for i in range(len(NotesList)):
+			Block= BlockHome.BlockHome(NotesList[i][1], NotesList[i][0])
 			self.__ListBLock.append(Block)
-			self.ListBlockL.addWidget(Block)
+			ListBlockL.addWidget(Block)

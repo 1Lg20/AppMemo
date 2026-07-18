@@ -1,5 +1,5 @@
 BlockDimensionH=100
-BlockDimensionW=300
+BlockDimensionW=500
 
 StyleBlock="""
         background-color: #f0f0f0;
