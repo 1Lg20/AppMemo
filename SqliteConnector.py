@@ -9,3 +9,10 @@ class Database():
 	def GetNotes(self):
 		self.__cursor.execute("SELECT ID, Title FROM Notes")
 		return self.__cursor.fetchall()
+
+	def GetNoteByID(self, id):
+		self.__cursor.execute("SELECT Title, Context FROM Notes WHERE ID="+str(id))
+		return self.__cursor.fetchall()
+	
+	def Close(self):
+		self.__database.close()
