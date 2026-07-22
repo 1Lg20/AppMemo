@@ -14,5 +14,12 @@ class Database():
 		self.__cursor.execute("SELECT Title, Context FROM Notes WHERE ID="+str(id))
 		return self.__cursor.fetchall()
 	
+	def SalvaText(self, id, testo):
+		Query="UPDATE Notes SET Context= ? WHERE ID= ?"
+		
+		self.__cursor.execute(Query, (testo, id))
+		
+		self.__database.commit()
+	
 	def Close(self):
 		self.__database.close()
